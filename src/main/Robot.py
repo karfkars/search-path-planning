@@ -56,6 +56,8 @@ class Robot():
         expanded_cells = [[-1 for row_cell in range(len(grid[0]))] for row in range(len(grid))]
         expanded_cells[x][y] = counter
 
+        actions = [[-1 for row_cell in range(len(grid[0]))] for row in range(len(grid))]
+
         target_found = False
         all_grid_searched = False
 
@@ -80,6 +82,7 @@ class Robot():
                                 open_cells.append((g, newX, newY))
                                 counter = counter + 1
                                 expanded_cells[newX][newY] = counter
+                                actions[newX][newY] = index
 
             checked_cells.append(open_cells[0])
             open_cells.pop(0)
@@ -92,6 +95,28 @@ class Robot():
         print()
         for i in range(len(expanded_cells)):
                 print(expanded_cells[i])
+
+        policy = [[' ' for row_cell in range(len(grid[0]))] for row in range(len(grid))]
+        x = goal_cell[0]
+        y = goal_cell[1]
+        policy[x][y] = '*'
+        while not (x == initial_cell[0] and y == initial_cell[1]):
+            previous_x = x - delta[actions[x][y]][0]
+            previous_y = y - delta[actions[x][y]][1]
+
+            policy[previous_x][previous_y] = delta_name[actions[x][y]]
+            print(policy[previous_x][previous_y])
+
+            x = previous_x
+            y = previous_y
+
+        print()
+        for i in range(len(actions)):
+            print(actions[i])
+
+        print()
+        for i in range(len(policy)):
+            print(policy[i])
 
         if target_found: return target
         else: return "Failed!"
