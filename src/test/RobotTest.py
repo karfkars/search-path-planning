@@ -56,6 +56,24 @@ def test_search_3x3_distance_unreachable_because_of_obstacle():
     actual = robot.search(grid, initial_cell, goal_cell)
     assert expected == actual
 
+def test_search_5x6_distance_is_11_alternative_starting_position():
+    grid = [[0, 0, 1, 0, 0, 0],
+            [0, 0, 1, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0],
+            [0, 0, 1, 1, 1, 0],
+            [0, 0, 0, 0, 1, 0]]
+
+    initial_cell = [4, 1]
+    goal_cell = [1, 4]
+
+    robot = Robot()
+
+    expected = (6, 1, 4)
+    actual = robot.search(grid, initial_cell, goal_cell)
+    assert expected == actual
+
+
+
 def test_search_5x6_distance_is_11():
     grid = [[0,0,1,0,0,0],
             [0,0,1,0,0,0],
@@ -72,21 +90,24 @@ def test_search_5x6_distance_is_11():
     actual = robot.search(grid, initial_cell, goal_cell)
     assert expected == actual
 
-def test_search_5x6_distance_is_11():
+
+def test_search_5x6_distance_is_11_different_obstacle():
     grid = [[0,0,1,0,0,0],
-            [0,0,1,0,0,0],
-            [0,0,0,0,1,0],
+            [0,0,0,0,0,0],
+            [0,0,1,0,1,0],
             [0,0,1,1,1,0],
             [0,0,0,0,1,0]]
 
-    initial_cell = [4,1]
-    goal_cell = [1,4]
+    initial_cell = [0, 0]
+    goal_cell = [4, 5]
 
     robot = Robot()
 
-    expected = (6, 1, 4)
+    expected = (9, 4, 5)
     actual = robot.search(grid, initial_cell, goal_cell)
     assert expected == actual
+
+
 
 
 

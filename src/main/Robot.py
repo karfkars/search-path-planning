@@ -52,6 +52,10 @@ class Robot():
         open_cells = [(g,x,y)]
         checked_cells = []
 
+        counter = 0
+        expanded_cells = [[-1 for row_cell in range(len(grid[0]))] for row in range(len(grid))]
+        expanded_cells[x][y] = counter
+
         target_found = False
         all_grid_searched = False
 
@@ -74,6 +78,8 @@ class Robot():
                         if ( self.isNotAlredyInList(open_cells, newX, newY)): #openCell
                             if (self.isNotAlredyInList(checked_cells, newX, newY)): #extendedCells
                                 open_cells.append((g, newX, newY))
+                                counter = counter + 1
+                                expanded_cells[newX][newY] = counter
 
             checked_cells.append(open_cells[0])
             open_cells.pop(0)
@@ -82,13 +88,10 @@ class Robot():
             if (len(open_cells) == 0):
                 all_grid_searched = True
 
-            print("-------------")
-            print(checked_cells)
-            print(open_cells)
-            print(target_found)
-            print(all_grid_searched)
-            print("-------------")
 
+        print()
+        for i in range(len(expanded_cells)):
+                print(expanded_cells[i])
 
         if target_found: return target
         else: return "Failed!"
